@@ -1,0 +1,70 @@
+/* src/styles/UserHome.css */
+
+.user-home-bg {
+  background-color: #d9ebff; /* nền xanh nhạt giống hình */
+  min-height: 100vh;
+}
+
+.user-home-card {
+  background-color: #fdfdfd;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.user-banner {
+  background: #192a8a;
+  color: #ffe162;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.user-banner-title {
+  font-size: 48px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.user-banner-subtitle {
+  font-size: 24px;
+  color: #fff;
+}
+
+.category-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00135c;
+  margin-bottom: 16px;
+}
+
+.comic-card {
+  border-radius: 16px;
+  border: 1px solid #eee;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.comic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.comic-title {
+  font-weight: 600;
+  font-size: 16px;
+  min-height: 48px;
+}
+
+.comic-price {
+  font-weight: 700;
+  color: #0d6efd;
+}
+
+.comic-badge {
+  font-size: 12px;
+  color: #999;
+}
