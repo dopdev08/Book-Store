@@ -16,9 +16,6 @@ import MyOrdersPage from "./pages/MyOrdersPage";
 import CheckoutPage from "./pages/CheckoutPage";     
 import ProfilePage from "./pages/ProfilePage";       
 
-import { CartProvider } from "./context/CartContext";
-import { ToastProvider } from "./context/ToastContext";
-
 import PaymentPage from "./pages/PaymentPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
 
@@ -37,42 +34,40 @@ import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
-    <ToastProvider>
-      <CartProvider>
-        <MainNavbar />
+    <>
+      <MainNavbar />
 
-        <Routes>
-          {/* USER */}
-          <Route path="/" element={<HomeRedirect />} />
-          <Route path="/comics/:id" element={<ComicDetailPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} /> {/* thanh toán */}
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/orders" element={<MyOrdersPage />} />   {/* lịch sử đơn */}
-          <Route path="/my-reviews" element={<MyReviewsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />   {/* hồ sơ */}
+      <Routes>
+        {/* USER */}
+        <Route path="/" element={<HomeRedirect />} />
+        <Route path="/comics/:id" element={<ComicDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} /> {/* thanh toán */}
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/orders" element={<MyOrdersPage />} />   {/* lịch sử đơn */}
+        <Route path="/my-reviews" element={<MyReviewsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />   {/* hồ sơ */}
 
-          {/* AUTH */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+        {/* AUTH */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-          {/* ADMIN */}
-          <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin/comics" element={<AdminComicsPage />} />
-            <Route path="/admin/discount-codes" element={<AdminDiscountCodesPage />} />
-            <Route path="/admin/orders" element={<AdminOrdersPage />} />
-            <Route path="/admin/reports" element={<AdminReportsPage />} />
-            <Route path="/admin/users" element={<AdminUsersPage />} />
-            <Route
-              path="/admin/users/:id/orders"
-              element={<AdminUserOrdersPage />}
-            />
-            <Route path="/admin/reviews" element={<AdminReviewsPage />} />
-          </Route>
-        </Routes>
-      </CartProvider>
-    </ToastProvider>
+        {/* ADMIN */}
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/comics" element={<AdminComicsPage />} />
+          <Route path="/admin/discount-codes" element={<AdminDiscountCodesPage />} />
+          <Route path="/admin/orders" element={<AdminOrdersPage />} />
+          <Route path="/admin/reports" element={<AdminReportsPage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route
+            path="/admin/users/:id/orders"
+            element={<AdminUserOrdersPage />}
+          />
+          <Route path="/admin/reviews" element={<AdminReviewsPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

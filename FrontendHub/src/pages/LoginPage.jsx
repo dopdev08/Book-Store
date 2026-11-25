@@ -26,13 +26,6 @@ function LoginPage() {
         password,
       });
 
-      console.log("LOGIN SUCCESS:", data);
-
-      // Chuẩn hóa token
-      const jwtToken = data.tokenType
-        ? `${data.tokenType} ${data.token}`
-        : data.token;
-
       // Lưu vào context + localStorage
       login(
         {
@@ -41,7 +34,7 @@ function LoginPage() {
           email: data.email,
           roles: data.roles,
         },
-        jwtToken
+        data.token
       );
 
       // (tuỳ bạn có dùng remember nữa hay không, giờ login() đã lưu rồi)

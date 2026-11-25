@@ -1,15 +1,13 @@
 // src/components/MainNavbar.jsx
 import { Navbar, Container, Nav, Button, Dropdown, Badge } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 
 function MainNavbar() {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username");
-  const roles = JSON.parse(localStorage.getItem("userRoles") || "[]");
-  const isAdmin = token && roles.includes("ROLE_ADMIN");
+  const { user, token, isAdmin, logout } = useAuth();
 
   const { cartItems } = useCart();
   const cartCount = cartItems.reduce(
@@ -18,10 +16,7 @@ function MainNavbar() {
   );
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userRoles");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
+    logout();
     navigate("/login");
   };
 
@@ -112,7 +107,7 @@ function MainNavbar() {
                   size="sm"
                   id="dropdown-user"
                 >
-                  👤 {username || "Tài khoản"}
+                  👤 {user?.username || "Tài khoản"}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

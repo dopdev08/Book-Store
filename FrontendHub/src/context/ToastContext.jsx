@@ -1,5 +1,5 @@
 // src/context/ToastContext.jsx
-import { createContext, useState, useContext } from "react";
+import { createContext, useCallback, useState, useContext } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { createPortal } from "react-dom";
 
@@ -8,10 +8,11 @@ const ToastContext = createContext(null);
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
-  const showToast = (message) => {
+  // Giữ nguyên tham chiếu: nhiều trang đặt showToast trong dependency của useEffect
+  const showToast = useCallback((message) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message }]);
-  };
+  }, []);
 
   const removeToast = (id) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));

@@ -195,7 +195,7 @@ function AdminDiscountCodesPage() {
     const { item } = confirmPayload;
 
     try {
-      await discountCodeApi.delete(item.id);
+      await discountCodeApi.remove(item.id);
       await loadCodes();
     } catch (e) {
       console.error("Lỗi xóa mã:", e.response?.data || e.message);

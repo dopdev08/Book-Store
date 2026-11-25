@@ -1,44 +1,36 @@
 // src/context/AuthContext.jsx
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);   // {id, username, email, roles}
-  const [token, setToken] = useState(null); // "Bearer xxx"
+const readUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem("authUser"));
+  } catch {
+    return null;
+  }
+};
 
-  // Load từ localStorage khi F5
-  useEffect(() => {
-    const savedToken = localStorage.getItem("accessToken");
-    const savedUser = localStorage.getItem("authUser");
-    if (savedToken && savedUser) {
-      setToken(savedToken);
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch {
-        setUser(null);
-      }
-    }
-  }, []);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(readUser); // {id, username, email, roles}
+  // JWT không có tiền tố "Bearer"; các file trong api/ đọc key "token" này
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
 
   const login = (userData, jwtToken) => {
+    localStorage.setItem("token", jwtToken);
+    localStorage.setItem("authUser", JSON.stringify(userData));
     setUser(userData);
     setToken(jwtToken);
-
-    localStorage.setItem("accessToken", jwtToken);
-    localStorage.setItem("authUser", JSON.stringify(userData));
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("authUser");
     setUser(null);
     setToken(null);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("authUser");
   };
 
-  const isAdmin =
-    user?.roles?.includes("ROLE_ADMIN") ||
-    user?.roles?.includes("ADMIN"); // đề phòng backend trả không có prefix
+  const isAdmin = !!token && !!user?.roles?.includes("ROLE_ADMIN");
 
   const value = {
     user,
