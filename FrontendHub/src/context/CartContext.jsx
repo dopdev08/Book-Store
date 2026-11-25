@@ -1,6 +1,7 @@
 // src/context/CartContext.jsx
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { cartApi } from "../api/cartApi";
+import { useAuth } from "./AuthContext";
 import { useToast } from "./ToastContext";
 
 const CartContext = createContext();
@@ -11,6 +12,11 @@ export function CartProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   const { showToast } = useToast();
+  const { token: authToken } = useAuth();
+
+  // Token của lần tải giỏ xong gần nhất; khác authToken nghĩa là giỏ chưa sẵn sàng
+  const [loadedToken, setLoadedToken] = useState();
+  const cartReady = loadedToken === authToken;
 
   const normalizeStock = (stock) => {
     const n = Number(stock);
@@ -35,6 +41,8 @@ export function CartProvider({ children }) {
     try {
       setLoading(true);
       const data = await cartApi.getCart(); // List<CartItem>
+      // Đã đăng xuất/đổi tài khoản trong lúc chờ: bỏ kết quả của phiên cũ
+      if (localStorage.getItem("token") !== token) return;
       const items = data || [];
 
       setCartItems(items);
@@ -59,9 +67,17 @@ export function CartProvider({ children }) {
   };
 
   useEffect(() => {
-    loadCart({ silent: true });
+    let current = true;
+    loadCart({ silent: true }).finally(() => {
+      if (current) setLoadedToken(authToken);
+    });
+    return () => {
+      current = false;
+      setCartItems([]);
+      setTotalPrice(0);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [authToken]);
 
   // helper: tìm item trong giỏ theo comicId
   const findCartItemByComicId = (comicId) => {
@@ -206,6 +222,7 @@ export function CartProvider({ children }) {
         cartItems,
         totalPrice,
         loading,
+        cartReady,
         addToCart,
         updateQuantity,
         removeFromCart,

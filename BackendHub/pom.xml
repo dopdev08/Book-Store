@@ -12,7 +12,8 @@
     <description>Online comic store backend</description>
 
     <properties>
-        <java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
         <!-- để 3.x, Spring Boot mới sẽ tự quản lý version phụ -->
         <spring-boot.version>3.3.0</spring-boot.version>
     </properties>
@@ -112,6 +113,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <executions>
                     <execution>
                     <goals>

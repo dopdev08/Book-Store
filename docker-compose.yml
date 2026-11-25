@@ -1,0 +1,19 @@
+# MySQL cho máy dev/test. Cổng 3307 để không đụng MySQL cài sẵn (3306).
+name: truyenhub
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: truyenhub
+      MYSQL_ROOT_PASSWORD: truyenhub
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      # TCP: chỉ sẵn sàng sau khi MySQL khởi tạo xong
+      test: ["CMD", "mysqladmin", "ping", "-h127.0.0.1", "-uroot", "-ptruyenhub"]
+      interval: 3s
+      retries: 40
+volumes:
+  mysql-data:

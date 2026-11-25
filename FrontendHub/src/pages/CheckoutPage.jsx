@@ -21,7 +21,7 @@ import { useToast } from "../context/ToastContext";
 import { discountCodeApi } from "../api/discountCodeApi";
 
 function CheckoutPage() {
-  const { cartItems, totalPrice, reloadCart } = useCart(); // totalPrice = tiền hàng
+  const { cartItems, cartReady, totalPrice, reloadCart } = useCart(); // totalPrice = tiền hàng
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -98,6 +98,7 @@ function CheckoutPage() {
       navigate("/login");
       return;
     }
+    if (!cartReady) return;
     if (cartItems.length === 0) {
       navigate("/cart");
       return;
@@ -132,7 +133,7 @@ function CheckoutPage() {
     };
 
     init();
-  }, [cartItems.length, navigate, showToast]);
+  }, [cartReady, cartItems.length, navigate, showToast]);
 
   // ===== Validate CODE =====
   const validateOrderCode = async (code) => {

@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { orderApi } from "../api/orderApi";
+import { useCart } from "../context/CartContext";
 import { useToast } from "../context/ToastContext";
 import { discountCodeApi } from "../api/discountCodeApi";
 
@@ -19,6 +20,7 @@ function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { reloadCart } = useCart();
 
   // ✅ lấy state từ navigate hoặc sessionStorage (để refresh không mất)
   const [stateData, setStateData] = useState(null);
@@ -282,8 +284,7 @@ function PaymentPage() {
       sessionStorage.removeItem("checkout_state");
       showToast(`Thanh toán ${methodLabel} thành công! Đơn #${order.id}`);
       navigate("/orders");
-      // nếu bạn có reloadCart trong context thì gọi sau navigate
-      // reloadCart();
+      reloadCart({ silent: true });
     } catch (err) {
       console.error("Lỗi tạo đơn sau thanh toán giả lập:", err);
       const msg =
