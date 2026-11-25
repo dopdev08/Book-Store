@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- Lỗi thật chưa sửa: các test này đang đỏ. Xem docs/bug-reports.md -->
+<suite name="Known bugs">
+    <test name="Known bugs">
+        <classes>
+            <class name="com.truyenhub.api.KnownBugsTest"/>
+        </classes>
+    </test>
+</suite>

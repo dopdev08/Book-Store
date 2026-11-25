@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Regression">
+    <test name="API">
+        <classes>
+            <class name="com.truyenhub.api.AuthApiTest"/>
+            <class name="com.truyenhub.api.SecurityApiTest"/>
+            <class name="com.truyenhub.api.OrderApiTest"/>
+        </classes>
+    </test>
+    <test name="UI">
+        <classes>
+            <class name="com.truyenhub.ui.LoginUiTest"/>
+            <class name="com.truyenhub.ui.ShoppingUiTest"/>
+        </classes>
+    </test>
+</suite>
